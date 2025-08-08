@@ -6,3 +6,6 @@ az acr login --name acrpokequeueprojectdev
 
 docker tag pokeapi:latest acrpokequeueprojectdev.azurecr.io/pokeapi:latest
 docker tag pokeapi:latest acrpokequeueprojectdev.azurecr.io/pokeapi:0.0.0
+
+docker push acrpokequeueprojectdev.azurecr.io/pokeapi:latest
+docker push acrpokequeueprojectdev.azurecr.io/pokeapi:0.0.0
