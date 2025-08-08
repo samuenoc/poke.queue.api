@@ -1,0 +1,8 @@
+docker buildx build --platform linux/amd64 -t pokeapi:latest . --load
+
+docker run -d -p 8000:8000 --name pokeapi-container --env-file .env pokeapi:latest
+
+az acr login --name acrpokequeueprojectdev
+
+docker tag pokeapi:latest acrpokequeueprojectdev.azurecr.io/pokeapi:latest
+docker tag pokeapi:latest acrpokequeueprojectdev.azurecr.io/pokeapi:0.0.0
