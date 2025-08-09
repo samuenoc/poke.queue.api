@@ -39,8 +39,9 @@ async def update_pokemon_request( pokemon_request: PokemonRequest) -> dict:
 
 async def insert_pokemon_request( pokemon_request: PokemonRequest) -> dict:
     try:
-        query = " exec pokequeue.create_poke_request ? "
-        params = ( pokemon_request.pokemon_type,  )
+        # Modificado para incluir sample_size
+        query = " exec pokequeue.create_poke_request ?, ? "
+        params = ( pokemon_request.pokemon_type, pokemon_request.sample_size )
         result = await execute_query_json( query , params, True )
         result_dict = json.loads(result)
 
@@ -48,7 +49,7 @@ async def insert_pokemon_request( pokemon_request: PokemonRequest) -> dict:
 
         return result_dict
     except Exception as e:
-        logger.error( f"Error inserting report reques {e}" )
+        logger.error( f"Error inserting report request {e}" )
         raise HTTPException( status_code=500 , detail="Internal Server Error" )
     
 async def delete_pokemon_request(id: int) -> dict:
@@ -165,6 +166,7 @@ async def get_all_request() -> dict:
             , r.url 
             , r.created 
             , r.updated
+            , r.SampleSize  -- Incluir el nuevo campo
         from pokequeue.requests r 
         inner join pokequeue.status s 
         on r.id_status = s.id 

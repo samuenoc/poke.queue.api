@@ -26,3 +26,10 @@ class PokemonRequest(BaseModel):
         description="Estado de la peticion",
         pattern="^(sent|completed|failed|inprogress)$"
     )
+    
+    # Nuevo campo para muestreo aleatorio
+    sample_size: Optional[int] = Field(
+        default=None,
+        gt=0,  # Debe ser mayor que 0
+        description="Tamaño de muestra para muestreo aleatorio (opcional)"
+    )
